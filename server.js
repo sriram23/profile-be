@@ -45,4 +45,4 @@ app.get('/tweets', (req, res) => {
     })
 })
 
-app.listen(4000, () => console.log('Backend is running on localhost:4000'));
+app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
