@@ -3,8 +3,12 @@ const axios = require('axios');
 let Parser = require('rss-parser');
 const parser = new Parser();
 const { application } = require('express');
+const cors = require('cors')
 const app = express();
 
+app.use(cors({
+  origin: ['https://sriram-23.web.app', 'https://sriram-23.herokuapp.com', 'http://localhost:3000']
+}))
 require('dotenv').config()
 
 app.get('/', (req, res) => {
