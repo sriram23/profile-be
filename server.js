@@ -49,4 +49,18 @@ app.get('/tweets', (req, res) => {
     })
 })
 
+app.get('/twitter-user', (req, res) => {
+  axios.get(`https://api.twitter.com/2/users/by/username/${req.query.username}`,
+  {
+    headers: {
+      "Authorization": `Bearer ${process.env.TWITTER_BEARER}`
+    }
+  }).then((user) => {
+    res.status(200).send(user.data)
+  }).catch(err => {
+    console.error("Something went wrong: ", err)
+    res.send(err);
+})
+})
+
 app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
