@@ -63,4 +63,22 @@ app.get('/twitter-user', (req, res) => {
 })
 })
 
+app.get('/github', (req, res) => {
+  let url = ""
+  if(req.query.q === "profile"){
+    url = `https://api.github.com/users/sriram23`
+  } else if(req.query.q === "repos") {
+    url = `https://api.github.com/users/sriram23/repos`
+  } else {
+    res.send("<h1>Error: Query is missing or invalid query!</h1>")
+    return
+  }
+  axios.get(url).then(data => {
+    res.status(200).send(data.data)
+  }).catch(err => {
+    console.error("Something went wrong: ", err)
+    res.send(err)
+  })
+})
+
 app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
