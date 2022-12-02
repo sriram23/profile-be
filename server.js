@@ -1,10 +1,20 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+
 const axios = require('axios');
+
 let Parser = require('rss-parser');
 const parser = new Parser();
+
+const nodemailer = require('nodemailer');
+
 const { application } = require('express');
+
 const cors = require('cors')
 const app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 
 app.use(cors({
   origin: ['https://sriram-23.web.app', 'https://sriram-23.herokuapp.com', 'http://localhost:3000']
@@ -79,6 +89,33 @@ app.get('/github', (req, res) => {
     console.error("Something went wrong: ", err)
     res.send(err)
   })
+})
+
+app.post('/email', (req,res)=>{
+  const mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
+    }
+  });
+  
+  const mailDetails = {
+    from: process.env.EMAIL,
+    to: process.env.TO_EMAIL,
+    subject: `Message from ${req.body.sender}`,
+    text: `${req.body.message}
+    
+
+    Sender email: ${req.body.email}`
+  };
+  mailTransporter.sendMail(mailDetails, (err, data) => {
+    if(err) {
+        res.send(err)
+    } else {
+        res.send(`Hey ${req.body.sender}, Your message is sent to Sriram!`)
+    }
+});
 })
 
 app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
