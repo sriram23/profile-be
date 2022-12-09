@@ -117,4 +117,26 @@ app.post('/email', (req,res)=>{
 });
 })
 
+app.get('/fetch-blogs', async(req, res) => {
+//   try {
+//   // let blogs;
+//   const posts = await parser.parseURL(process.env.HASHNODE_FEEDS)
+//   // hashnode.items.map(item => {
+//   //   item.medium = "hashnode"
+//   // })
+//   // const medium = await parser.parseURL(process.env.MEDIUM_FEEDS)
+//   // medium.items.map(item => {
+//   //   item.medium = "medium"
+//   // })
+//   // blogs = [...medium.items, ...hashnode.items]
+//   // blogs = _.orderBy(blogs, ['isoDate'], ['desc'])
+//   res.status(200).send(posts)
+// } catch(err) {
+//   res.send(err)
+// }
+  parser.parseURL(process.env.HASHNODE_FEEDS).then(resp => {
+    res.status(200).send(resp)
+  }).catch(err => res.send(err))
+})
+
 app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
