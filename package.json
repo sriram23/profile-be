@@ -22,6 +22,10 @@
     "node": "16.x"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "sonarqube": "node ./sonarqube/sonarscan.js"
+  },
+  "devDependencies": {
+    "sonarqube-scanner": "^2.9.1"
   }
 }
