@@ -17,7 +17,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const _ = require("lodash")
 
-
+// Image api
+app.use('/assets', express.static('assets'))
 app.use(cors({
   origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000']
 }))
