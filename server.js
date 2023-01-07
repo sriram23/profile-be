@@ -7,6 +7,7 @@ let Parser = require('rss-parser');
 const parser = new Parser();
 
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 
 const { application } = require('express');
 
@@ -17,8 +18,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const _ = require("lodash")
 
-// Image api
-app.use('/assets', express.static('assets'))
 app.use(cors({
   origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000']
 }))
@@ -28,6 +27,23 @@ app.get('/', (req, res) => {
   res.send('The Backend is running');
 });
 
+app.get('/image', (req, res) => {
+  const fileName = req.query.file
+  if(fs.existsSync(__dirname+"/assets/images/"+fileName)) {
+    res.sendFile(__dirname+"/assets/images/"+fileName)
+  } else {
+    res.status(404).send("File not found!")
+  }
+})
+
+app.get('/weatherIcon', (req, res) => {
+  const fileName = req.query.file
+  if(fs.existsSync(__dirname+"/assets/weatherIcons/"+fileName)) {
+    res.sendFile(__dirname+"/assets/weatherIcons/"+fileName)
+  } else {
+    res.status(404).send("File not found!")
+  }
+})
 app.get('/blogs', async(req, res) => {
   try {
   let blogs;
