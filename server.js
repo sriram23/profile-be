@@ -44,6 +44,8 @@ app.get('/weatherIcon', (req, res) => {
     res.status(404).send("File not found!")
   }
 })
+
+
 app.get('/blogs', async(req, res) => {
   try {
   let blogs;
