@@ -61,7 +61,9 @@ app.get('/blogs', async(req, res) => {
   blogs = _.orderBy(blogs, ['isoDate'], ['desc'])
   res.status(200).send(blogs)
 } catch(err) {
-  res.send(err)
+  if(err.response) {
+    res.status(err.response.status).send(err.response.data)
+  }
 }
 })
 app.get('/tweets', (req, res) => {
