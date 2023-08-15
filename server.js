@@ -116,7 +116,6 @@ app.get('/github', (req, res) => {
 app.get('/flag', async(req, res) => {
   try {
     const img = await imageUrlToBase64(`https://flagsapi.com/${req.query.q}/shiny/64.png`)
-    console.log(img)
     if (img) {
       res.status(200).end(img);
     }
