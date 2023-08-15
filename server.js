@@ -16,10 +16,11 @@ const app = express();
 app.disable("x-powered-by")
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const _ = require("lodash")
+const _ = require("lodash");
+const { imageUrlToBase64 } = require('./helper');
 
 app.use(cors({
-  origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000']
+  origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000', 'https://weather-now-2.vercel.app/']
 }))
 require('dotenv').config()
 
@@ -110,6 +111,19 @@ app.get('/github', (req, res) => {
     console.error("Something went wrong: ", err)
     res.send(err)
   })
+})
+
+app.get('/flag', async(req, res) => {
+  try {
+    const img = await imageUrlToBase64(`https://flagsapi.com/${req.query.q}/shiny/64.png`)
+    console.log(img)
+    if (img) {
+      res.status(200).end(img);
+    }
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).send('Error fetching image');
+  }
 })
 
 app.post('/email', (req,res)=>{
