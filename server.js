@@ -20,7 +20,7 @@ const _ = require("lodash");
 const { imageUrlToBase64 } = require('./helper');
 
 app.use(cors({
-  origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000', 'https://weather-now-2.vercel.app/']
+  origin: ['https://sriram-23.web.app', 'https://sriram-23.vercel.app', 'http://localhost:3000', 'https://weather-now-2.vercel.app']
 }))
 require('dotenv').config()
 
