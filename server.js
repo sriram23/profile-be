@@ -37,6 +37,15 @@ app.get('/image', (req, res) => {
   }
 })
 
+app.get('/video', (req, res) => {
+  const fileName = req.query.file
+  if(fs.existsSync(__dirname+"/assets/videos/"+fileName)) {
+    res.sendFile(__dirname+"/assets/videos/"+fileName)
+  } else {
+    res.status(404).send("File not found!")
+  }
+})
+
 app.get('/weatherIcon', (req, res) => {
   const fileName = req.query.file
   if(fs.existsSync(__dirname+"/assets/weatherIcons/"+fileName)) {
