@@ -37,14 +37,6 @@ app.get('/image', (req, res) => {
   }
 })
 
-app.get('/video', (req, res) => {
-  const fileName = req.query.file
-  if(fs.existsSync(__dirname+"/assets/videos/"+fileName)) {
-    res.sendFile(__dirname+"/assets/videos/"+fileName)
-  } else {
-    res.status(404).send("File not found!")
-  }
-})
 
 app.get('/weatherIcon', (req, res) => {
   const fileName = req.query.file
@@ -131,6 +123,19 @@ app.get('/flag', async(req, res) => {
   } catch (error) {
     console.error('Error fetching image:', error);
     res.status(500).send('Error fetching image');
+  }
+})
+
+app.get('/swiggy', async(req, res) => {
+  try {
+    const lat = req.query.lat
+    const lon = req.query.lon
+    const url = process.env.SWIGGY_API+`?lat=${lat}&lng=${lon}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`
+    const data = await axios.get(url)
+    res.status(200).json(data);
+  } catch (error) {
+    console.error('Error fetching swiggy data:', error);
+    res.status(500).send(error);
   }
 })
 
