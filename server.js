@@ -9,6 +9,8 @@ const parser = new Parser();
 const nodemailer = require('nodemailer');
 const fs = require('fs');
 
+const request = require('request');
+
 const { application } = require('express');
 
 const cors = require('cors')
@@ -168,6 +170,18 @@ app.post('/email', (req,res)=>{
     }
 });
 })
+
+app.get('/crypto', (req, res) => {
+  const fileName = req.query.file
+  if(!fileName) {
+    res.status(400).send("Invalid file name")
+  }
+  const url = `https://bin.bnbstatic.com/static/assets/logos/${fileName}.png`;
+  request(url).on('error', (err) => {
+    res.status(404).send('Imange not found')
+  })
+  .pipe(res)
+});
 
 
 app.listen(process.env.PORT || 4000, () => console.log('Backend is running on localhost:4000'));
